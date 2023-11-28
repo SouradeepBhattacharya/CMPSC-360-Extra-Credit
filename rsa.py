@@ -60,11 +60,13 @@ def generate_keypair(p: int, q: int) -> Tuple[Key, Key]:
         d = modular_inverse(e,k)
         public_key = tuple([n,e]) #Tuple[n,e]
         private_key = tuple([n,d]) #Tuple[n,d]
+        return tuple([public_key, private_key])
 
     else:
+        #raise ValueError
         return f"ERROR! {p} and {q} are not co-primes"
 
-    return tuple([public_key, private_key])
+    
 
 
 def generate_public_exponent(k: int) -> int:
@@ -251,7 +253,13 @@ def rsa_encrypt(m: int, pub_key: Key) -> int:
     Returns: c (encrypted cipher)
     NOTE: You CANNOT use the pow function (or any similar function)
     here.
+
     '''
+
+    for i in pub_key:
+        if type(i) == str:
+            return "Error"
+
     n = pub_key[0]
     e = pub_key[1]
 
@@ -275,6 +283,13 @@ def rsa_decrypt(c: int, priv_key: Key) -> int:
     NOTE: You CANNOT use the pow function (or any similar function)
     here.
     '''
+    for i in priv_key:
+        if type(i) == str:
+            return "Error"
+    
+    if type(c) != int:
+        return "Error"
+    
     n = priv_key[0]
     d = priv_key[1]
 
@@ -288,9 +303,16 @@ def rsa_decrypt(c: int, priv_key: Key) -> int:
 
 
 if __name__ == '__main__':
-    a = generate_keypair(3,11)
+    p = int(input("Enter the first number: "))
+    q = int(input("Enter the second number: "))
+    a = generate_keypair(p,q)
+    print("The Key Pairs are: ",a)
     pub_key = a[0]
-    b = rsa_encrypt(42,pub_key)
+    n = pub_key[0]
+    print(f'\n!!!\nTo avoid Error, enter a number less than n = {n}\n!!!\n')
+    inp = int(input('Enter the Number you would like to encrypt: '))
+    
+    b = rsa_encrypt(inp,pub_key)
     print("The encrypted message is: ",b)
 
     priv_key = a[1]
