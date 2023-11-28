@@ -25,7 +25,7 @@ def base_conversion(number: int, base: int) -> int:
             accum -= 999
 
     if accum < 0:
-        return ("The input is wrong. Digits shoul be less than the base.")
+        return ("The input is wrong. Digits should be less than the base.")
 
     # CALCULATION
     # -- When Base is correct and Digits are correct
