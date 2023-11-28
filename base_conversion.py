@@ -29,10 +29,14 @@ def base_conversion(number: int, base: int) -> int:
 
     # CALCULATION
     # -- When Base is correct and Digits are correct
-    converted = []
     digits.reverse()
-    for a in digits:
-        x = a*(base**(digits.index(a)))
+    digits_reverse = {}
+    for i in range(len(digits)):
+        digits_reverse[i] = digits[i]
+    
+    converted = []
+    for a,b in digits_reverse.items():
+        x = b*(base**(a))
         converted.append(x)
 
     value = 0
